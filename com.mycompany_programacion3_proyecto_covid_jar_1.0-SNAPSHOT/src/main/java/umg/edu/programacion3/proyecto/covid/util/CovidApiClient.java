@@ -61,24 +61,29 @@ public class CovidApiClient {
     }
 
     /**
-     * Fetches COVID-19 report by ISO code and date (e.g. GTM, 2022-04-16)
-     */
-    public String getReport(String iso, String date) throws IOException, InterruptedException {
-        // Validate date format (Optional but recommended)
-        if (!date.matches("\\d{4}-\\d{2}-\\d{2}")) {
-            throw new IllegalArgumentException("Date must be in the format yyyy-MM-dd");
-        }
+     * Fetches COVID-19 report by ISO code and date (e.g. GTM, 2022-04-16)
+     */
+   public String getReport(String iso, String date) throws IOException, InterruptedException {
 
-        String url = String.format("%s/reports?iso=%s&date=%s", BASE_URL, iso, date);
+          if (!date.matches("\\d{4}-\\d{2}-\\d{2}")) {
+          throw new IllegalArgumentException("Date must be in the format YYY-MM-dd");
+                       } 
 
-        HttpRequest request = HttpRequest.newBuilder()
-                .uri(URI.create(url))
-                .header("X-RapidAPI-Key", API_KEY)
-                .header("X-RapidAPI-Host", API_HOST)
-                .GET()
-                .build();
+String url = String.format("%s/reports?iso=%s&date=%s", BASE_URL, iso, date);
 
-        HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
-        
-        if (response.statusCode() == 200) {
-            return response.body
+HttpRequest request = HttpRequest.newBuilder()
+.uri(URI.create(url))
+.header("X-RapidAPI-Key", API_KEY)
+.header("X-RapidAPI-Host", API_HOST)
+.GET()
+.build();
+
+HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
+
+if (response.statusCode() == 200) {
+return response.body();
+} else {
+throw new IOException("Failed to fetch report for " + iso + " on " + date + ": " + response.statusCode());
+}
+}
+}

@@ -3,6 +3,7 @@ package umg.edu.programacion3.proyecto.covid.service;
 import com.google.gson.Gson;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityTransaction;
+import static java.lang.Math.log;
 import lombok.extern.log4j.Log4j2;
 import umg.edu.programacion3.proyecto.covid.dto.*;
 import umg.edu.programacion3.proyecto.covid.mapper.DtoMapper;
